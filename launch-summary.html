@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threads Launch Plan | 2026 Spring</title>
+    <meta
+      name="description"
+      content="Threads自動運用システムの2026年春ローンチ計画を、目標200万円、販売時期、戦略、価格、導線まで含めて整理したサマリーページ。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #0a1220;
+        --bg-soft: #101d33;
+        --surface: rgba(13, 23, 39, 0.78);
+        --surface-strong: rgba(18, 33, 55, 0.92);
+        --line: rgba(163, 205, 255, 0.12);
+        --text: #edf5ff;
+        --muted: #9db5cf;
+        --accent: #ffb86b;
+        --accent-strong: #ff8f52;
+        --mint: #8ff2d0;
+        --danger: #ff9786;
+        --shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Noto Sans JP", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(255, 184, 107, 0.15), transparent 28%),
+          radial-gradient(circle at 88% 10%, rgba(143, 242, 208, 0.13), transparent 22%),
+          linear-gradient(180deg, #08111d 0%, #0b1526 45%, #09111d 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 34px 34px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.72), transparent 92%);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: min(1180px, calc(100% - 28px));
+        margin: 0 auto;
+        padding: 26px 0 64px;
+      }
+
+      .topbar,
+      .hero-grid,
+      .metric-grid,
+      .grid-2,
+      .grid-3,
+      .timeline {
+        display: grid;
+        gap: 22px;
+      }
+
+      .topbar {
+        grid-template-columns: auto auto;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 26px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .brand-mark {
+        display: grid;
+        place-items: center;
+        width: 52px;
+        height: 52px;
+        border-radius: 17px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: #10141f;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+      }
+
+      .eyebrow,
+      .mini {
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .eyebrow {
+        font-size: 12px;
+        color: var(--mint);
+      }
+
+      .mini {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .brand h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+        font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+      }
+
+      .brand h1 {
+        font-size: 22px;
+      }
+
+      .brand p {
+        margin: 2px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .nav-link,
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 12px 18px;
+        border-radius: 999px;
+        text-decoration: none;
+        border: 1px solid var(--line);
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+
+      .nav-link:hover,
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button-primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: #10141f;
+        border: 0;
+        font-weight: 800;
+      }
+
+      .button-secondary {
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .hero-grid,
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid-3,
+      .metric-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hero-card,
+      .card,
+      .metric,
+      .timeline-item {
+        border: 1px solid var(--line);
+        background: var(--surface);
+        backdrop-filter: blur(16px);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card {
+        padding: 34px;
+        border-radius: 32px;
+      }
+
+      .hero-card h2 {
+        margin-top: 16px;
+        font-size: clamp(40px, 7vw, 76px);
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+      }
+
+      .hero-card p,
+      .card p,
+      .timeline-item p,
+      .metric p,
+      li {
+        color: var(--muted);
+        line-height: 1.82;
+      }
+
+      .hero-actions,
+      .pill-row,
+      .point-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .pill {
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line);
+        color: #d8e7fb;
+        font-size: 13px;
+      }
+
+      .card,
+      .metric,
+      .timeline-item {
+        padding: 26px;
+        border-radius: 24px;
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 10px;
+        font-size: clamp(28px, 4vw, 46px);
+        color: var(--accent);
+      }
+
+      .section {
+        margin-top: 28px;
+      }
+
+      .section-head {
+        max-width: 800px;
+        margin-bottom: 16px;
+      }
+
+      .section-head h3 {
+        margin-top: 10px;
+        font-size: clamp(28px, 4vw, 46px);
+        letter-spacing: -0.04em;
+      }
+
+      .point-list {
+        list-style: none;
+        padding: 0;
+        margin: 16px 0 0;
+      }
+
+      .point-list li {
+        flex: 1 1 220px;
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .timeline {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .timeline-item {
+        position: relative;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        top: 26px;
+        left: 26px;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--mint);
+        box-shadow: 0 0 0 8px rgba(143, 242, 208, 0.12);
+      }
+
+      .timeline-item h4,
+      .card h4 {
+        margin-top: 18px;
+        font-size: 22px;
+      }
+
+      .highlight {
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .danger {
+        color: var(--danger);
+      }
+
+      .accent {
+        color: var(--accent);
+      }
+
+      .footer {
+        margin-top: 32px;
+        padding: 24px 0 0;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 980px) {
+        .topbar,
+        .hero-grid,
+        .metric-grid,
+        .grid-2,
+        .grid-3,
+        .timeline {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          width: min(100% - 18px, 100%);
+          padding-top: 18px;
+        }
+
+        .hero-card,
+        .card,
+        .metric,
+        .timeline-item {
+          padding: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div class="topbar">
+          <div class="brand">
+            <div class="brand-mark">TL</div>
+            <div>
+              <h1>Threads Launch Plan</h1>
+              <p>2026 Spring summary for GitHub view</p>
+            </div>
+          </div>
+          <a class="nav-link" href="#schedule">販売スケジュールを見る</a>
+        </div>
+
+        <div class="hero-grid">
+          <section class="hero-card">
+            <p class="eyebrow">Launch Direction</p>
+            <h2>目標200万円を、Threads特化の仕組み訴求で取りにいく。</h2>
+            <p>
+              今回売るのは単なる投稿ツールではありません。
+              <span class="highlight">Threadsで認知 → 教育 → 導線を回すための自動運用基盤</span>
+              として見せ、無料動画とVSLで価格を通すローンチに寄せます。
+            </p>
+            <div class="pill-row">
+              <span class="pill">販売目標 200万円</span>
+              <span class="pill">Threads特化</span>
+              <span class="pill">無料動画 → VSL → 販売</span>
+              <span class="pill">GW初回 + 5月末再販</span>
+            </div>
+            <div class="hero-actions" style="margin-top: 22px;">
+              <a class="button button-primary" href="#strategy">戦略を見る</a>
+              <a class="button button-secondary" href="#offer">価格設計を見る</a>
+            </div>
+          </section>
+
+          <aside class="card">
+            <p class="eyebrow">Core Claim</p>
+            <h4>主張の芯</h4>
+            <ul class="point-list">
+              <li>自動化しても伸びない人が多いのは、自動化する前の設計と知識が死んでいるから。</li>
+              <li>Threadsは投稿を頑張る場所ではなく、売れる流れを作る場所。</li>
+              <li>伸ばした人の知識を分析して、運用の型に落としたこと自体が強み。</li>
+              <li>無駄なツール課金を増やすのではなく、仕組みで迷いを減らす。</li>
+            </ul>
+          </aside>
+        </div>
+      </header>
+
+      <main>
+        <section class="section">
+          <div class="section-head">
+            <p class="eyebrow">Snapshot</p>
+            <h3>今回のローンチ要点</h3>
+          </div>
+          <div class="metric-grid">
+            <article class="metric">
+              <p class="mini">goal</p>
+              <strong>200万円</strong>
+              <p>59,800円〜69,800円帯で30本前後を取りにいく設計。</p>
+            </article>
+            <article class="metric">
+              <p class="mini">offer</p>
+              <strong>先行 59,800円</strong>
+              <p>通常69,800円を見せつつ、今回のみ先行価格を切るのが本命。</p>
+            </article>
+            <article class="metric">
+              <p class="mini">future</p>
+              <strong>20万円 + 月額</strong>
+              <p>将来的な正式価格の伏線を持ちつつ、今回は先行導入で通す。</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="strategy" class="section">
+          <div class="section-head">
+            <p class="eyebrow">Positioning</p>
+            <h3>どういう戦略でいくか</h3>
+            <p>
+              勝ち筋は、AI自動化の便利さではなく
+              <span class="highlight">「売れる流れを仕組みにするThreads特化システム」</span>
+              として売ることです。
+            </p>
+          </div>
+          <div class="grid-3">
+            <article class="card">
+              <p class="mini">who</p>
+              <h4>刺す相手</h4>
+              <p>
+                商品がある。LINEかメルマガ導線を持っている、または作りたい。SNS導線が弱く、Threadsを売上導線として使いたい人。
+              </p>
+            </article>
+            <article class="card">
+              <p class="mini">what</p>
+              <h4>売るもの</h4>
+              <p>
+                投稿ツールではなく、Threadsで認知、教育、導線を回すための自動運用基盤。毎回ゼロから考えないための仕組み。
+              </p>
+            </article>
+            <article class="card">
+              <p class="mini">why</p>
+              <h4>通す理由</h4>
+              <p>
+                伸びない原因は努力不足ではなく知識不足と設計不足。しかも多くの人は周辺ツールに無駄課金して遠回りしているから。
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <p class="eyebrow">Market Angle</p>
+            <h3>差別化の方向</h3>
+          </div>
+          <div class="grid-2">
+            <article class="card">
+              <h4>避ける見せ方</h4>
+              <ul class="point-list">
+                <li>AIで自動化できます</li>
+                <li>投稿を大量に作れます</li>
+                <li>XでもThreadsでも何でもいけます</li>
+                <li>万能AIです</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h4>取る見せ方</h4>
+              <ul class="point-list">
+                <li>Threads特化</li>
+                <li>10表示のゴミ投稿量産を終わらせる</li>
+                <li>売れる流れを作る自動運用仕組み</li>
+                <li>知識を型にし、運用の迷いを減らす</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="schedule" class="section">
+          <div class="section-head">
+            <p class="eyebrow">Schedule</p>
+            <h3>いつローンチするか</h3>
+            <p>
+              1回目はGWで初速を取り、2回目は
+              <span class="highlight">給料日後の5月末</span>
+              で刈り取る設計。
+            </p>
+          </div>
+          <div class="timeline">
+            <article class="timeline-item">
+              <p class="mini">phase 1</p>
+              <h4>4月前半〜中旬</h4>
+              <p>XとThreadsで問題提起、思想、実況、証拠を出しながら集客を開始。</p>
+            </article>
+            <article class="timeline-item">
+              <p class="mini">phase 2</p>
+              <h4>4月末〜GW</h4>
+              <p>
+                <span class="accent">1回目販売</span>
+                は4月30日ごろ開始、5月2日〜3日締切を本命とする。
+              </p>
+            </article>
+            <article class="timeline-item">
+              <p class="mini">phase 3</p>
+              <h4>5月前半</h4>
+              <p>初回購入者の反応、感想、導入しやすさ、改善点を回収して再販素材にする。</p>
+            </article>
+            <article class="timeline-item">
+              <p class="mini">phase 4</p>
+              <h4>5月27日〜31日</h4>
+              <p>
+                <span class="accent">2回目販売</span>
+                は給料日後に寄せ、月末締切で決断を作る。
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <p class="eyebrow">Launch Flow</p>
+            <h3>販売導線</h3>
+          </div>
+          <div class="grid-2">
+            <article class="card">
+              <h4>導線の全体像</h4>
+              <ul class="point-list">
+                <li>X・Threads</li>
+                <li>無料動画配布</li>
+                <li>LINE・メルマガ登録</li>
+                <li>教育</li>
+                <li>VSL</li>
+                <li>販売</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h4>役割分担</h4>
+              <ul class="point-list">
+                <li>無料動画: 問題提起、常識破壊、必要性の理解</li>
+                <li>VSL: 商品説明、差別化、価格正当化、限定訴求</li>
+                <li>LINE・メルマガ: 不安解消、教育、締切追い込み</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="offer" class="section">
+          <div class="section-head">
+            <p class="eyebrow">Offer</p>
+            <h3>価格とオファー設計</h3>
+            <p>
+              一番現実的なのは
+              <span class="highlight">通常69,800円 / 今回のみ先行59,800円</span>
+              です。価格アンカーと今買う理由を両方作れます。
+            </p>
+          </div>
+          <div class="grid-3">
+            <article class="card">
+              <p class="mini">core</p>
+              <h4>本体価値</h4>
+              <p>AI投稿生成、予約/自動投稿、運用モード切替、週間プラン生成、改善戦略生成、マルチアカウント対応。</p>
+            </article>
+            <article class="card">
+              <p class="mini">bonus</p>
+              <h4>必要な付属</h4>
+              <p>初期設定ガイド、導線設計テンプレ、週間プランテンプレ、オンボーディング動画、購入者向けQ&A。</p>
+            </article>
+            <article class="card">
+              <p class="mini">scarcity</p>
+              <h4>限定条件</h4>
+              <p>先行価格、人数制限、初回導入枠、改善フィードバック前提。この4つで決断を作る。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <p class="eyebrow">Extra Weapons</p>
+            <h3>一般的なローンチでやっていない武器</h3>
+          </div>
+          <div class="grid-2">
+            <article class="card">
+              <h4>追加すべき要素</h4>
+              <ul class="point-list">
+                <li>先行案内希望者の別取り</li>
+                <li>人数制限の導入</li>
+                <li>実況コンテンツ</li>
+                <li>診断コンテンツ</li>
+                <li>比較表の明文化</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h4>診断導線の狙い</h4>
+              <p>
+                「あなたがSNSで疲弊する理由はこれ」という形で自分ごと化させ、
+                気合い不足ではなく
+                <span class="highlight">仕組み不足</span>
+                に原因を置いたうえでオファーに接続する。
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <p class="eyebrow">Revenue Scenario</p>
+            <h3>200万円達成までの現実的な見立て</h3>
+          </div>
+          <div class="grid-3">
+            <article class="card">
+              <p class="mini">first launch</p>
+              <h4>初回で取る役割</h4>
+              <p>売上を作りつつ、実績、反応、感想を回収して2回目の証拠に変える。</p>
+            </article>
+            <article class="card">
+              <p class="mini">second launch</p>
+              <h4>再販で伸ばす役割</h4>
+              <p>給料日後に、証拠、安心感、改善点を載せた状態で強く刈り取る。</p>
+            </article>
+            <article class="card">
+              <p class="mini">best case</p>
+              <h4>本命シナリオ</h4>
+              <p>
+                先行59,800円で初速を作り、通常69,800円で利益を積む。
+                <span class="highlight">合計30本前後</span>
+                で200万円ラインを狙う。
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <p class="eyebrow">Decision</p>
+            <h3>このローンチで固定している判断</h3>
+          </div>
+          <div class="card">
+            <ul class="point-list">
+              <li>今回はオープンチャットローンチではなく、無料動画とVSL中心でいく。</li>
+              <li>Xは集客導線、販売訴求の本体はThreads特化で見せる。</li>
+              <li>万能AIとして売らず、知識入りの運用基盤として売る。</li>
+              <li>1回目はGW、2回目は5月末の給料日後で動く。</li>
+              <li>将来は20万円 + 月額に寄せるが、今回は先行導入で通す。</li>
+            </ul>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        このページは、今回のThreadsローンチに関する会話内容を整理したGitHub掲載用サマリーです。
+      </footer>
+    </div>
+  </body>
+</html>

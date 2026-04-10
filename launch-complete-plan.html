@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threadsローンチ完全設計書</title>
+    <meta
+      name="description"
+      content="Threads自動運用システムのローンチ完全設計書。コンセプト、顧客設計、商品名、無料動画、VSL、教育導線、オファー、売上シナリオまでを実行レベルで整理。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f5f0e8;
+        --paper: #fffdf9;
+        --paper-strong: #fff8f0;
+        --ink: #1f1a17;
+        --muted: #675d56;
+        --line: rgba(79, 58, 41, 0.14);
+        --accent: #a44c1f;
+        --accent-strong: #7b2f12;
+        --accent-soft: #f0d6c5;
+        --good: #226845;
+        --warn: #a85c18;
+        --shadow: 0 20px 48px rgba(69, 48, 28, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Noto Sans JP", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(164, 76, 31, 0.08), transparent 24%),
+          linear-gradient(180deg, #faf6ef 0%, #f5f0e8 100%);
+      }
+
+      .page {
+        width: min(1180px, calc(100% - 28px));
+        margin: 0 auto;
+        padding: 28px 0 64px;
+      }
+
+      .hero,
+      .sheet,
+      .card,
+      .metric {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+
+      .hero {
+        padding: 36px;
+        border-radius: 28px;
+      }
+
+      .sheet {
+        margin-top: 24px;
+        padding: 28px;
+        border-radius: 24px;
+      }
+
+      .card,
+      .metric {
+        padding: 22px;
+        border-radius: 20px;
+      }
+
+      .eyebrow,
+      .mini {
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow {
+        font-size: 12px;
+        color: var(--accent);
+      }
+
+      .mini {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+        font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+        line-height: 1.1;
+      }
+
+      h1 {
+        margin-top: 14px;
+        font-size: clamp(34px, 6vw, 70px);
+        letter-spacing: -0.05em;
+      }
+
+      h2 {
+        font-size: clamp(26px, 3vw, 40px);
+        letter-spacing: -0.04em;
+      }
+
+      h3 {
+        font-size: 23px;
+      }
+
+      h4 {
+        font-size: 19px;
+      }
+
+      p,
+      li,
+      td,
+      th {
+        line-height: 1.84;
+      }
+
+      p,
+      li,
+      td {
+        color: var(--muted);
+      }
+
+      strong {
+        color: var(--ink);
+      }
+
+      .hero-grid,
+      .metric-grid,
+      .grid-2,
+      .grid-3 {
+        display: grid;
+        gap: 18px;
+      }
+
+      .hero-grid,
+      .grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .metric-grid,
+      .grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .metric strong {
+        display: block;
+        margin-top: 8px;
+        font-size: clamp(26px, 4vw, 42px);
+        color: var(--accent);
+      }
+
+      .section-head {
+        margin-bottom: 16px;
+      }
+
+      .summary {
+        margin-top: 20px;
+        padding: 18px 20px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, var(--paper-strong), #fff6ea);
+        border: 1px solid rgba(164, 76, 31, 0.12);
+      }
+
+      .tag-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+
+      .tag {
+        padding: 9px 12px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent-strong);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      ul {
+        padding-left: 20px;
+        margin: 12px 0 0;
+      }
+
+      .box-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .box-list li {
+        margin-top: 12px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: rgba(164, 76, 31, 0.05);
+        border: 1px solid rgba(164, 76, 31, 0.08);
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        margin-top: 12px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 760px;
+      }
+
+      th,
+      td {
+        padding: 14px 12px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--ink);
+        font-size: 14px;
+      }
+
+      .good {
+        color: var(--good);
+        font-weight: 700;
+      }
+
+      .warn {
+        color: var(--warn);
+        font-weight: 700;
+      }
+
+      .footer {
+        margin-top: 24px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 900px) {
+        .hero-grid,
+        .metric-grid,
+        .grid-2,
+        .grid-3 {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <p class="eyebrow">Master Plan</p>
+        <h1>Threadsローンチ完全設計書</h1>
+        <p>
+          本書は、Threads系自動運用システムを販売し、
+          <strong>1ローンチで売上200万円を作る</strong>
+          ための完全設計書である。今回はオープンチャットではなく、
+          X・Threads → 無料動画 → LINE・メルマガ → 教育 → VSL → 販売
+          の流れで設計する。
+        </p>
+        <div class="tag-row">
+          <span class="tag">目標200万円</span>
+          <span class="tag">Threads特化</span>
+          <span class="tag">無料動画 → VSL</span>
+          <span class="tag">GW初回 + 5月末再販</span>
+        </div>
+      </header>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">1. コンセプト</p>
+          <h2>コンセプトの確定</h2>
+        </div>
+        <p>
+          本商品の本質は、投稿作成ツールではない。Threadsで
+          <strong>認知 → 教育 → 導線</strong>
+          を回すための自動運用仕組みである。
+        </p>
+        <div class="grid-2">
+          <div class="card">
+            <h3>本命コンセプト</h3>
+            <p><strong>Threadsで売れる流れを作る自動運用仕組み</strong></p>
+            <p>販売訴求の基軸として最も自然で、将来の拡張にも耐える。</p>
+          </div>
+          <div class="card">
+            <h3>フックコピー</h3>
+            <p><strong>10表示のゴミ投稿を終わらせる</strong></p>
+            <p>刺さりを作る入口として使用し、主コンセプトに接続する。</p>
+          </div>
+        </div>
+        <div class="summary">
+          <strong>結論:</strong>
+          表看板は「Threadsで売れる流れを作る自動運用仕組み」、
+          フックは「10表示のゴミ投稿を終わらせる」で使い分ける。
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">2. 顧客理解</p>
+          <h2>WHO / WHAT / WHY と顧客の分解</h2>
+        </div>
+        <div class="grid-3">
+          <div class="metric">
+            <p class="mini">who</p>
+            <strong>商品はあるがSNS導線が弱い人</strong>
+            <p>note、コンテンツ、コンサル、無形商材、LINE導線保有者が中心。</p>
+          </div>
+          <div class="metric">
+            <p class="mini">what</p>
+            <strong>売れる流れを回す仕組み</strong>
+            <p>投稿量産ではなく、認知、教育、導線を止めない運用基盤。</p>
+          </div>
+          <div class="metric">
+            <p class="mini">why</p>
+            <strong>知識なし自動化は失敗する</strong>
+            <p>投稿数ではなく、設計と知識が不足していることが失敗原因。</p>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top: 18px;">
+          <div class="card">
+            <h3>顧客タイプの分解</h3>
+            <ul class="box-list">
+              <li><strong>タイプA:</strong> 商品は売っているがSNSが弱い人</li>
+              <li><strong>タイプB:</strong> LINE・メルマガはあるが流入が弱い人</li>
+              <li><strong>タイプC:</strong> 投稿はしているが売上につながらない人</li>
+              <li><strong>タイプD:</strong> 運用疲れで止まりかけている人</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>切るべき顧客</h3>
+            <ul>
+              <li>フォロワーだけ増やしたい人</li>
+              <li>バズだけ狙いたい人</li>
+              <li>商品がない初心者</li>
+              <li>完全放置で全部任せたい人</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">3. Customer Flow</p>
+          <h2>お客の流れ</h2>
+        </div>
+        <p>
+          顧客は、単に「便利そう」で買うわけではない。
+          以下の心理変化を経て、仕組みを欲しがる状態に入る。
+        </p>
+        <ol>
+          <li><strong>違和感:</strong> 投稿しているのに、売上に効いている感じがしない。</li>
+          <li><strong>自己否定:</strong> 自分の努力不足、継続不足、センス不足だと思う。</li>
+          <li><strong>ツール依存:</strong> Claude、Cursor、投稿ツール、自動化ツールに手を出す。</li>
+          <li><strong>混乱:</strong> 投稿数は増えても、伸び方も導線も分からず、さらに疲れる。</li>
+          <li><strong>課題の再定義:</strong> 問題は努力不足ではなく、知識のないまま自動化していたことだと知る。</li>
+          <li><strong>仕組み欲求:</strong> 毎回考えなくていい、運用判断を減らせる仕組みを求める。</li>
+          <li><strong>購入判断:</strong> 価格ではなく「この疲弊から抜けられるか」で決断する。</li>
+        </ol>
+        <div class="summary">
+          <strong>設計上の意味:</strong>
+          無料動画では「本当の課題に気づかせる」こと、
+          VSLでは「その解決策として商品を置く」ことが必要になる。
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">4. Product Name</p>
+          <h2>商品名候補</h2>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>本命候補</h3>
+            <ul>
+              <li>Threads導線自動化システム</li>
+              <li>Threads Flow Engine</li>
+              <li>THREADS FUNNEL OS</li>
+              <li>Threads売上導線メーカー</li>
+              <li>Threads自動運用基盤</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>判断</h3>
+            <p>
+              一番ズレずに伝わるのは
+              <strong>Threads導線自動化システム</strong>。
+              少し強く見せるなら <strong>Threads Flow Engine</strong>。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">5. Free Video</p>
+          <h2>無料動画の設計</h2>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>役割</h3>
+            <p>教育、問題提起、常識破壊、必要性理解。売り込みすぎず、課題認識を作る。</p>
+          </div>
+          <div class="card">
+            <h3>本命タイトル</h3>
+            <p><strong>Threads自動化で伸びない人が多い本当の理由</strong></p>
+          </div>
+          <div class="card">
+            <h3>補助タイトル案</h3>
+            <p>10表示のゴミ投稿を終わらせるThreads設計 / なぜAIで自動化しても売れないのか</p>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 18px;">
+          <h3>無料動画の構成案</h3>
+          <ol>
+            <li>問題提起</li>
+            <li>よくある勘違い</li>
+            <li>なぜ自動化しても売れないのか</li>
+            <li>Threadsの本当の役割</li>
+            <li>売れる流れの正体</li>
+            <li>仕組みにすべき理由</li>
+            <li>どういう人に必要か</li>
+            <li>続きはVSLへ</li>
+          </ol>
+        </div>
+        <div class="card" style="margin-top: 18px;">
+          <h3>無料動画のスライド構成</h3>
+          <ol>
+            <li>タイトル</li>
+            <li>毎日投稿しても売れない人が多い理由</li>
+            <li>自動化しても伸びない人の共通点</li>
+            <li>知識がないまま自動化すると何が起きるか</li>
+            <li>無駄なツール課金が増える構造</li>
+            <li>Threadsは投稿を頑張る場所ではない</li>
+            <li>Threadsの役割は認知→教育→導線</li>
+            <li>売れる流れを作る運用とは何か</li>
+            <li>投稿生成だけでは足りない理由</li>
+            <li>必要なのは運用モード・週間設計・改善</li>
+            <li>仕組みにすると何が消えるか</li>
+            <li>向いている人 / 向いていない人</li>
+            <li>このあとVSLで話す内容</li>
+            <li>CTA</li>
+          </ol>
+        </div>
+        <div class="card" style="margin-top: 18px;">
+          <h3>無料動画の台本構成</h3>
+          <ul class="box-list">
+            <li><strong>冒頭:</strong> 毎日投稿しているのに売上につながっていないなら、努力不足ではなく頑張り方を間違えている。</li>
+            <li><strong>前半:</strong> 多くの人は自動化すれば伸びると思っているが、知識なし自動化はゴミ投稿量産になる。</li>
+            <li><strong>中盤:</strong> Threadsは投稿を頑張る場所ではなく、売れる流れを作る場所である。</li>
+            <li><strong>後半:</strong> 必要なのは投稿ツールではなく、伸ばした人の知識を型にした運用の仕組み。</li>
+            <li><strong>締め:</strong> VSLで、その仕組みをどう商品化したかを具体的に見せる。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">6. VSL</p>
+          <h2>VSLの設計</h2>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>役割</h3>
+            <p>商品説明、差別化、価格正当化、限定訴求、販売。理解を決断に変える。</p>
+          </div>
+          <div class="card">
+            <h3>本命タイトル</h3>
+            <p><strong>Threadsで売れる流れを自動化する仕組みを公開します</strong></p>
+          </div>
+          <div class="card">
+            <h3>補助タイトル案</h3>
+            <p>10表示のゴミ投稿を終わらせるThreads自動運用システム / 商品はあるのにSNS導線が弱い人へ</p>
+          </div>
+        </div>
+        <div class="card" style="margin-top: 18px;">
+          <h3>VSLの構成案</h3>
+          <ol>
+            <li>共感</li>
+            <li>問題の再定義</li>
+            <li>解決策の提示</li>
+            <li>商品の全体像</li>
+            <li>各機能説明</li>
+            <li>差別化</li>
+            <li>向いている人 / 向いていない人</li>
+            <li>導入後の未来</li>
+            <li>オファー</li>
+            <li>価格</li>
+            <li>限定</li>
+            <li>CTA</li>
+          </ol>
+        </div>
+        <div class="card" style="margin-top: 18px;">
+          <h3>VSLのスライド構成</h3>
+          <ol>
+            <li>タイトル</li>
+            <li>今の市場で起きていること</li>
+            <li>自動化しても伸びない原因</li>
+            <li>Threadsの本当の役割</li>
+            <li>売れる流れの全体像</li>
+            <li>これを仕組みにしたのが今回のシステム</li>
+            <li>AI投稿生成</li>
+            <li>予約 / 自動投稿</li>
+            <li>運用モード切替</li>
+            <li>週間プラン生成</li>
+            <li>改善戦略生成</li>
+            <li>マルチアカウント対応</li>
+            <li>他のAI投稿ツールとの違い</li>
+            <li>どんな人に向いているか</li>
+            <li>向いていない人</li>
+            <li>導入すると何が変わるか</li>
+            <li>オファー内容</li>
+            <li>特典</li>
+            <li>価格</li>
+            <li>限定条件</li>
+            <li>CTA</li>
+          </ol>
+        </div>
+        <div class="card" style="margin-top: 18px;">
+          <h3>VSLの台本構成</h3>
+          <ul class="box-list">
+            <li><strong>冒頭:</strong> これは投稿を作るツールではなく、Threadsで売れる流れを回す仕組みである。</li>
+            <li><strong>問題の再定義:</strong> 自動化しても伸びないのは、自動化が悪いのではなく知識がないまま回しているから。</li>
+            <li><strong>解決策:</strong> 伸ばした人の知識を先に型にした運用基盤が必要。</li>
+            <li><strong>商品説明:</strong> 投稿生成、予約、自動投稿、運用モード、週間プラン、改善戦略までまとめて運用できる。</li>
+            <li><strong>差別化:</strong> 一般的な投稿ツールは作るところで終わるが、これは迷わず回すところまで入っている。</li>
+            <li><strong>価格前:</strong> 毎回ゼロから考える運用を続けるコストのほうが高い。</li>
+            <li><strong>クロージング:</strong> 通常69,800円だが、今回は先行導入につき59,800円で案内する。</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">7. Education</p>
+          <h2>LINE・メルマガの教育導線</h2>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>通数</th>
+              <th>テーマ</th>
+              <th>役割</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>登録御礼 + 無料動画送付</td><td>初回接触と視聴促進</td></tr>
+            <tr><td>2</td><td>なぜ自動化しても伸びないのか</td><td>問題の再定義</td></tr>
+            <tr><td>3</td><td>知識がない人ほど遠回りする理由</td><td>共感と常識破壊</td></tr>
+            <tr><td>4</td><td>Threadsの本当の役割</td><td>媒体理解</td></tr>
+            <tr><td>5</td><td>売れる流れを作る人は何をやっているか</td><td>理想提示</td></tr>
+            <tr><td>6</td><td>この仕組みで消える悩み</td><td>導入メリット提示</td></tr>
+            <tr><td>7</td><td>向いている人 / 向いていない人</td><td>選別と信頼形成</td></tr>
+            <tr><td>8</td><td>VSL案内</td><td>販売フェーズ移行</td></tr>
+            <tr><td>9</td><td>FAQ / 不安解消</td><td>反論処理</td></tr>
+            <tr><td>10</td><td>締切24時間前</td><td>決断促進</td></tr>
+            <tr><td>11</td><td>締切当日</td><td>最終追い込み</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">8. Offer</p>
+          <h2>59,800円〜69,800円を通すためのオファー設計</h2>
+        </div>
+        <div class="grid-3">
+          <div class="metric">
+            <p class="mini">normal</p>
+            <strong>69,800円</strong>
+            <p>本来価値のアンカーとして使う通常価格。</p>
+          </div>
+          <div class="metric">
+            <p class="mini">launch</p>
+            <strong>59,800円</strong>
+            <p>今回のみの先行価格。今買う理由を作る。</p>
+          </div>
+          <div class="metric">
+            <p class="mini">future</p>
+            <strong>20万円 + 月額</strong>
+            <p>将来的な正式価格構想。先行導入価値の伏線。</p>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top: 18px;">
+          <div class="card">
+            <h3>同梱内容</h3>
+            <ul>
+              <li>システム本体</li>
+              <li>初期設定ガイド</li>
+              <li>導線設計テンプレ</li>
+              <li>週間プランテンプレ</li>
+              <li>導入動画</li>
+              <li>購入者向けQ&amp;A会 1回</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>見せ方の要点</h3>
+            <ul>
+              <li>豪華特典ではなく、すぐ動かせることを売る</li>
+              <li>ツールではなく、迷いを消す仕組みとして見せる</li>
+              <li>安さではなく、今入る理由があることを伝える</li>
+              <li>先着、人数制限、初回導入枠で決断理由を作る</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">9. Revenue</p>
+          <h2>200万円達成までの現実的シナリオ</h2>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>逆算ライン</h3>
+            <p>59,800円 × 34本 = 約203万円</p>
+            <p>69,800円 × 29本 = 約202万円</p>
+          </div>
+          <div class="card">
+            <h3>本命シナリオ</h3>
+            <p>先行59,800円で20本</p>
+            <p>通常69,800円で10〜13本</p>
+            <p class="good">合計約189万円〜210万円</p>
+          </div>
+          <div class="card">
+            <h3>流入見立て</h3>
+            <p>既存リストから10〜15本</p>
+            <p>新規流入から10〜15本</p>
+            <p>締切追い込みで5本前後</p>
+          </div>
+        </div>
+        <div class="summary">
+          <strong>判断:</strong>
+          500リストがホットでなくても、無料動画とVSLを挟み、
+          新規流入を足せば十分現実的に戦える。
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">10. Schedule</p>
+          <h2>販売時期</h2>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>1回目販売</h3>
+            <p><strong>4月30日頃開始、5月2日〜3日締切</strong></p>
+            <p>GW中に導入したい需要を拾い、初速と実績回収を行う。</p>
+          </div>
+          <div class="card">
+            <h3>2回目販売</h3>
+            <p><strong>5月27日〜31日付近</strong></p>
+            <p>給料日後に寄せ、初回の証拠と感想を載せて再販する。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">11. Extra Strategy</p>
+          <h2>一般的な戦略でやっていない追加施策</h2>
+        </div>
+        <ul class="box-list">
+          <li><strong>先行案内希望者の分離取得:</strong> 販売前から温度の高い層を別で集める。</li>
+          <li><strong>人数制限:</strong> 期限だけでなく席を理由にする。</li>
+          <li><strong>実況コンテンツ:</strong> 開発実況、改善実況、運用実況を証拠として見せる。</li>
+          <li><strong>無料診断導線:</strong> 「あなたがSNSで疲弊する理由はこれ」で自分ごと化を作る。</li>
+          <li><strong>比較表:</strong> 一般的なAI投稿ツールとの違いを言語化する。</li>
+        </ul>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">12. Final Direction</p>
+          <h2>最終判断</h2>
+        </div>
+        <p>
+          今回のローンチで固定すべきなのは、
+          <strong>AIで自動化できます</strong> ではなく
+          <strong>知識を仕組みにしたから、Threadsで売れる流れを回せる</strong>
+          という訴求である。
+        </p>
+        <ul class="box-list">
+          <li>商品は「投稿ツール」ではなく「売れる流れを作る自動運用仕組み」として売る。</li>
+          <li>無料動画は気づかせる、VSLは決断させる役割に徹底分離する。</li>
+          <li>お客の疲弊は努力不足ではなく、知識不足と仕組み不足に置き換える。</li>
+          <li>価格は69,800円を本体価値にしつつ、今回は59,800円の先行導入で通す。</li>
+          <li>1回目で実績を作り、2回目で証拠を載せて刈り取る。</li>
+        </ul>
+      </section>
+
+      <p class="footer">この文書は、今回の会話内容をもとに整理した完全版ローンチ設計書です。</p>
+    </div>
+  </body>
+</html>

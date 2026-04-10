@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Threads自動運用システム 事業計画書</title>
+    <meta
+      name="description"
+      content="Threads自動運用システムの2026年春ローンチに向けた事業計画書。目標売上、商品定義、販売戦略、価格、スケジュール、収支シナリオ、リスク対策を整理。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Noto+Sans+JP:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #f5f1e7;
+        --paper: #fffdf9;
+        --paper-strong: #fffaf1;
+        --ink: #1f1b18;
+        --muted: #675d56;
+        --line: rgba(73, 55, 42, 0.14);
+        --accent: #a64d1f;
+        --accent-soft: #f1d7c5;
+        --accent-strong: #7d3110;
+        --good: #1e6a48;
+        --warn: #b35c1e;
+        --shadow: 0 18px 40px rgba(72, 49, 29, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Noto Sans JP", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top right, rgba(166, 77, 31, 0.08), transparent 22%),
+          linear-gradient(180deg, #faf6ef 0%, #f5f1e7 100%);
+      }
+
+      .page {
+        width: min(1120px, calc(100% - 28px));
+        margin: 0 auto;
+        padding: 28px 0 60px;
+      }
+
+      .sheet,
+      .hero,
+      .kpi,
+      .card {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+      }
+
+      .hero {
+        padding: 34px;
+        border-radius: 28px;
+      }
+
+      .sheet {
+        margin-top: 24px;
+        padding: 28px;
+        border-radius: 24px;
+      }
+
+      .eyebrow,
+      .mini {
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+      }
+
+      .eyebrow {
+        font-size: 12px;
+        color: var(--accent);
+      }
+
+      .mini {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+        font-family: "Space Grotesk", "Noto Sans JP", sans-serif;
+        line-height: 1.1;
+      }
+
+      h1 {
+        margin-top: 14px;
+        font-size: clamp(34px, 6vw, 68px);
+        letter-spacing: -0.05em;
+      }
+
+      h2 {
+        font-size: clamp(24px, 3vw, 38px);
+        letter-spacing: -0.04em;
+      }
+
+      h3 {
+        font-size: 22px;
+      }
+
+      p,
+      li,
+      td,
+      th {
+        line-height: 1.86;
+      }
+
+      p,
+      li,
+      td {
+        color: var(--muted);
+      }
+
+      strong {
+        color: var(--ink);
+      }
+
+      .hero-meta,
+      .grid-2,
+      .grid-3,
+      .kpi-grid,
+      .schedule-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .hero-meta,
+      .grid-3,
+      .kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .grid-2,
+      .schedule-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .kpi {
+        padding: 22px;
+        border-radius: 22px;
+      }
+
+      .kpi strong {
+        display: block;
+        margin-top: 8px;
+        font-size: clamp(28px, 4vw, 44px);
+        color: var(--accent);
+      }
+
+      .section-head {
+        margin-bottom: 18px;
+      }
+
+      .summary-box,
+      .card {
+        padding: 22px;
+        border-radius: 20px;
+      }
+
+      .summary-box {
+        margin-top: 22px;
+        background: linear-gradient(135deg, var(--paper-strong), #fff7ec);
+        border: 1px solid rgba(166, 77, 31, 0.14);
+      }
+
+      ul {
+        padding-left: 20px;
+        margin: 12px 0 0;
+      }
+
+      .plain-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .plain-list li {
+        margin-top: 12px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: rgba(166, 77, 31, 0.05);
+        border: 1px solid rgba(166, 77, 31, 0.08);
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        margin-top: 12px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 720px;
+      }
+
+      th,
+      td {
+        padding: 14px 12px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--ink);
+        font-size: 14px;
+      }
+
+      .good {
+        color: var(--good);
+        font-weight: 700;
+      }
+
+      .warn {
+        color: var(--warn);
+        font-weight: 700;
+      }
+
+      .footer {
+        margin-top: 24px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      @media (max-width: 900px) {
+        .hero-meta,
+        .grid-2,
+        .grid-3,
+        .kpi-grid,
+        .schedule-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <p class="eyebrow">Business Plan</p>
+        <h1>Threads自動運用システム 事業計画書</h1>
+        <p>
+          本計画書は、2026年春に実施するThreads特化商品の初回・再販ローンチについて、
+          目標売上200万円の達成を前提に、商品定義、販売戦略、価格設計、スケジュール、
+          売上シナリオ、リスク対策までを整理したものです。
+        </p>
+        <div class="hero-meta">
+          <div class="kpi">
+            <p class="mini">goal</p>
+            <strong>200万円</strong>
+            <p>1回の販売というより、GW初回販売と5月末再販を含めて達成確度を高める。</p>
+          </div>
+          <div class="kpi">
+            <p class="mini">launch</p>
+            <strong>2回販売</strong>
+            <p>1回目はGW、2回目は5月27日から31日付近の給料日後に実施する。</p>
+          </div>
+          <div class="kpi">
+            <p class="mini">pricing</p>
+            <strong>59,800円 / 69,800円</strong>
+            <p>先行価格と通常価格を使い分け、初速と利益の両方を取りにいく。</p>
+          </div>
+        </div>
+      </header>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">1. 目的</p>
+          <h2>本計画の目的</h2>
+        </div>
+        <p>
+          本計画の目的は、Threads特化の自動運用システムを販売し、
+          <strong>2026年春ローンチで売上200万円を作ること</strong>です。
+          ただし単に商品を販売するのではなく、今後の高単価化と月額化を見据えた
+          市場テスト、販売実績獲得、導入者の声の収集も同時に達成目標とします。
+        </p>
+        <div class="summary-box">
+          <strong>今回の位置づけ</strong>
+          <p>
+            今回は最終形の完成版販売ではなく、将来の
+            <strong>機材価格20万円 + 月額課金</strong>へ接続するための
+            先行導入フェーズとして設計する。
+          </p>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">2. 商品定義</p>
+          <h2>販売商品の定義</h2>
+        </div>
+        <p>
+          今回販売する商品は、単なる投稿作成ツールではない。Threads運用における
+          認知、教育、導線の流れを回すための自動運用基盤として位置づける。
+        </p>
+        <div class="grid-2">
+          <div class="card">
+            <h3>現状機能</h3>
+            <ul>
+              <li>AI投稿生成</li>
+              <li>予約投稿 / 自動投稿</li>
+              <li>運用モード切替（full / semi / generate_only）</li>
+              <li>週間プラン生成</li>
+              <li>改善戦略生成</li>
+              <li>マルチアカウント対応</li>
+              <li>Threads連携実装済み</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>商品の本質</h3>
+            <ul>
+              <li>投稿数を増やすための道具ではない</li>
+              <li>10表示レベルのゴミ投稿量産を終わらせるための仕組みである</li>
+              <li>運用判断の迷いを減らし、導線まで含めて回す基盤である</li>
+              <li>伸ばした人の知識を分析し、型に落としたこと自体が価値である</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">3. 市場認識</p>
+          <h2>現状認識と競争環境</h2>
+        </div>
+        <p>
+          市場では、AI自動化、教育ポスト、Threads収益化の訴求が埋まり始めている。
+          競合は「自動化できる」「投稿が作れる」に寄りがちであり、
+          ここに真正面から乗ると埋没しやすい。
+        </p>
+        <ul class="plain-list">
+          <li><strong>競合観測:</strong> AI自動化、教育ポスト、Threads収益化の文脈が強い。</li>
+          <li><strong>差別化方針:</strong> Threads特化、売れる流れの自動化、ゴミ投稿量産の終了、運用判断の固定化。</li>
+          <li><strong>参考にする売り方:</strong> 実況、証拠、不安解消、思想、限定、販売の流れ。</li>
+        </ul>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">4. ターゲット</p>
+          <h2>狙う顧客と切る顧客</h2>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <h3>本命ターゲット</h3>
+            <ul>
+              <li>商品はあるがSNS導線が弱い人</li>
+              <li>note販売、コンテンツ販売、コンサル、無形商材の保有者</li>
+              <li>LINE導線を作りたい、または既に持っている人</li>
+              <li>Threadsを売上導線として使いたい人</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>切る顧客</h3>
+            <ul>
+              <li>フォロワーだけ増やしたい人</li>
+              <li>バズだけ狙いたい人</li>
+              <li>商品がない初心者</li>
+              <li>完全放置で全部任せたい人</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">5. 訴求戦略</p>
+          <h2>主張の芯と販売メッセージ</h2>
+        </div>
+        <ul class="plain-list">
+          <li><strong>主張1:</strong> 自動化しても伸びない人が多いのは、自動化する前の設計と知識が死んでいるから。</li>
+          <li><strong>主張2:</strong> Threadsは投稿を頑張る場所ではなく、売れる流れを作る場所。</li>
+          <li><strong>主張3:</strong> 勝つのは投稿を頑張る人ではなく、運用を仕組みにした人。</li>
+          <li><strong>主張4:</strong> 知識がない人ほど、カーソル、Claude、周辺ツールに無駄なお金をかけて遠回りする。</li>
+        </ul>
+        <div class="summary-box">
+          <strong>販売メッセージの中心</strong>
+          <p>
+            「伸ばした人の知識を分析して、Threads運用の型にした。
+            無駄なツール課金を増やさず、売れる流れを回せるようにした。
+            だから、知識がない人でも迷わず運用できる。」
+          </p>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">6. 販売導線</p>
+          <h2>ローンチ導線設計</h2>
+        </div>
+        <p>
+          今回はオープンチャットローンチではなく、シンプルな情報導線で販売する。
+        </p>
+        <ul class="plain-list">
+          <li><strong>集客:</strong> X・Threads</li>
+          <li><strong>教育入口:</strong> 無料動画配布</li>
+          <li><strong>リスト化:</strong> LINE・メルマガ登録</li>
+          <li><strong>教育:</strong> 問題提起、常識破壊、失敗原因の再定義</li>
+          <li><strong>販売:</strong> VSL</li>
+          <li><strong>決断促進:</strong> 限定、期限、人数制限</li>
+        </ul>
+        <div class="grid-2">
+          <div class="card">
+            <h3>無料動画の役割</h3>
+            <p>
+              無料動画は教育・興味付け・問題提起・常識破壊の役割を持つ。
+              「何の商品か」「なぜ必要か」を理解させることが目的。
+            </p>
+          </div>
+          <div class="card">
+            <h3>VSLの役割</h3>
+            <p>
+              VSLは商品説明・差別化・価格正当化・限定訴求・販売の役割を持つ。
+              無料動画で理解させ、VSLで欲しいに変える。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">7. 価格設計</p>
+          <h2>価格・オファー戦略</h2>
+        </div>
+        <p>
+          今回の価格帯は、<strong>59,800円〜69,800円</strong>で設計する。
+          本命は通常69,800円、今回のみ先行59,800円の二段階提示である。
+        </p>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>項目</th>
+                <th>内容</th>
+                <th>狙い</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>通常価格</td>
+                <td>69,800円</td>
+                <td>本来価値のアンカーを作る</td>
+              </tr>
+              <tr>
+                <td>先行価格</td>
+                <td>59,800円</td>
+                <td>今買う理由を作る</td>
+              </tr>
+              <tr>
+                <td>将来価格構想</td>
+                <td>機材価格20万円 + 月額</td>
+                <td>今回の先行導入価値を強調する</td>
+              </tr>
+              <tr>
+                <td>限定条件</td>
+                <td>先着・人数制限・初回導入枠</td>
+                <td>決断を強制的に揃える</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">8. 売上計画</p>
+          <h2>200万円達成シナリオ</h2>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <h3>基準ライン</h3>
+            <p><strong>59,800円 × 34本 = 約203万円</strong></p>
+            <p><strong>69,800円 × 29本 = 約202万円</strong></p>
+          </div>
+          <div class="card">
+            <h3>本命シナリオ</h3>
+            <p><strong>先行59,800円で20本</strong></p>
+            <p><strong>通常69,800円で10〜13本</strong></p>
+            <p class="good">合計約189万円〜210万円</p>
+          </div>
+          <div class="card">
+            <h3>考え方</h3>
+            <p>
+              59,800円だけで押し切るのではなく、先行価格で初速を作り、
+              通常価格で利益を積む構造にする。
+            </p>
+          </div>
+        </div>
+        <div class="summary-box">
+          <strong>現実的な販売目線</strong>
+          <p>
+            500リストがホットではなくても、既存リスト販売 + X/Threads新規流入 + 動画教育 + 締切追い込みで
+            30本前後までは十分に射程に入る。
+          </p>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">9. 販売時期</p>
+          <h2>いつ販売するか</h2>
+        </div>
+        <div class="schedule-grid">
+          <div class="card">
+            <h3>1回目販売</h3>
+            <p><strong>4月30日頃開始、5月2日〜3日締切</strong></p>
+            <p>
+              GWに間に合わせることで、「休み中に導入したい」「SNS導線を立て直したい」
+              という欲求を利用する。
+            </p>
+          </div>
+          <div class="card">
+            <h3>2回目販売</h3>
+            <p><strong>5月27日〜31日付近</strong></p>
+            <p>
+              給料日後に寄せることで決済ハードルを下げ、
+              かつ月末締切で決断を強く作る。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">10. 実行戦略</p>
+          <h2>一般的なローンチに追加する戦略</h2>
+        </div>
+        <ul class="plain-list">
+          <li><strong>先行案内希望者の分離取得:</strong> 販売前から温度の高い層を別で集める。</li>
+          <li><strong>人数制限の導入:</strong> 期限だけでなく席を理由にする。</li>
+          <li><strong>実況コンテンツ:</strong> 開発実況、改善実況、運用実況を見せる。</li>
+          <li><strong>診断導線:</strong> 「あなたがSNSで疲弊する理由はこれ」という無料診断で自分ごと化を作る。</li>
+          <li><strong>比較表:</strong> 一般的なAI投稿ツールとの違いを明文化する。</li>
+        </ul>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">11. リスク</p>
+          <h2>主要リスクと対策</h2>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>リスク</th>
+                <th>内容</th>
+                <th>対策</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>投稿品質の核が弱い</td>
+                <td>Threadsで配られやすい投稿設計への特化がまだ甘い。</td>
+                <td>万能AIとして売らず、運用基盤として見せる。</td>
+              </tr>
+              <tr>
+                <td>ホットでないリスト</td>
+                <td>500リストあるが、温度が高くない。</td>
+                <td>無料動画とVSLで教育を厚くし、X/Threads流入も追加する。</td>
+              </tr>
+              <tr>
+                <td>高単価耐性</td>
+                <td>文章だけで59,800円以上は重い可能性がある。</td>
+                <td>無料動画で理解、VSLで欲求と価格正当化を行う。</td>
+              </tr>
+              <tr>
+                <td>期待値過剰</td>
+                <td>万能感を出すと不一致が生まれる。</td>
+                <td>向いていない人を先に切り、先行導入の文脈で売る。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="sheet">
+        <div class="section-head">
+          <p class="eyebrow">12. 結論</p>
+          <h2>最終方針</h2>
+        </div>
+        <p>
+          今回のローンチは、Threads自動化ツールの販売ではなく、
+          <strong>Threadsで売れる流れを仕組みに変える自動運用基盤</strong>
+          の先行導入販売として行う。
+        </p>
+        <ul class="plain-list">
+          <li><strong>販売時期:</strong> 1回目はGW、2回目は5月末の給料日後。</li>
+          <li><strong>販売価格:</strong> 通常69,800円、今回のみ先行59,800円。</li>
+          <li><strong>販売導線:</strong> X・Threads → 無料動画 → LINE・メルマガ → VSL → 販売。</li>
+          <li><strong>訴求軸:</strong> 知識の型化、無駄課金の削減、ゴミ投稿量産の終了、売れる流れの構築。</li>
+          <li><strong>長期方針:</strong> 将来的に20万円 + 月額モデルへ接続する。</li>
+        </ul>
+      </section>
+
+      <p class="footer">
+        この文書は、今回の会話内容をもとに整理した事業計画書です。
+      </p>
+    </div>
+  </body>
+</html>
