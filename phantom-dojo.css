@@ -1,0 +1,943 @@
+:root {
+  --bg: #120f0d;
+  --bg-2: #1d1814;
+  --surface: rgba(34, 25, 20, 0.82);
+  --surface-strong: #2d221c;
+  --surface-soft: rgba(255, 248, 239, 0.06);
+  --text: #f8f2ea;
+  --muted: #cfbeaa;
+  --line: rgba(255, 228, 196, 0.12);
+  --accent: #d84b2e;
+  --accent-2: #f17d45;
+  --accent-3: #f2bf7d;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+  --radius-xl: 32px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --max-width: 1180px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Noto Sans JP", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(216, 75, 46, 0.24), transparent 24%),
+    radial-gradient(circle at 85% 12%, rgba(242, 191, 125, 0.12), transparent 18%),
+    linear-gradient(180deg, #100e0c 0%, #171311 32%, #110f0e 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.72), transparent 92%);
+}
+
+a {
+  color: inherit;
+}
+
+.site-shell {
+  width: min(var(--max-width), calc(100% - 32px));
+  margin: 0 auto;
+  padding-bottom: 64px;
+}
+
+.promo-bar,
+.topbar,
+.hero-grid,
+.hero-actions,
+.nav-links,
+.trust-strip,
+.feature-grid,
+.program-grid,
+.rhythm-layout,
+.coach-layout,
+.coach-side,
+.pricing-grid,
+.access-layout,
+.step-grid,
+.faq-list,
+.training-overview,
+.training-detail-list,
+.trial-card {
+  display: grid;
+  gap: 20px;
+}
+
+.promo-bar {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: 14px 0 8px;
+}
+
+.promo-bar p,
+.site-footer p {
+  margin: 0;
+}
+
+.promo-bar p {
+  color: #eedcc6;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero,
+.section {
+  position: relative;
+}
+
+.hero {
+  padding: 18px 0 42px;
+}
+
+.topbar {
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 14px 0 34px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
+  color: #1a120d;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.08em;
+  box-shadow: 0 14px 32px rgba(241, 125, 69, 0.25);
+}
+
+.brand-copy {
+  display: grid;
+}
+
+.brand-copy strong,
+.eyebrow,
+.mini-label,
+.nav-links a,
+.promo-bar p,
+.class-tag,
+.time-block span {
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.brand-copy strong,
+.hero-copy h1,
+.hero-stage-card h2,
+.section-heading h2,
+.feature-card h3,
+.program-card h3,
+.timeline-card h3,
+.coach-feature h3,
+.coach-card h3,
+.price-card h3,
+.access-card h2,
+.map-card h3,
+.trial-card h2 {
+  font-family: "Bebas Neue", "Noto Sans JP", sans-serif;
+}
+
+.brand-copy strong {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.brand-copy small,
+.hero-lead,
+.feature-card p,
+.program-card p,
+.timeline-card span,
+.coach-copy,
+.coach-card li,
+.price-card li,
+.access-list span,
+.access-list strong,
+.map-card p,
+.trial-card p,
+.section-heading p,
+.hero-stage-card p,
+.hero-points li,
+.time-block p,
+.site-footer p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.brand-copy small,
+.eyebrow,
+.mini-label {
+  font-size: 12px;
+}
+
+.nav-links {
+  grid-auto-flow: column;
+  align-items: center;
+}
+
+.nav-links a {
+  color: #f6e7d2;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.nav-cta,
+.primary-button,
+.secondary-button {
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 180ms ease, opacity 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.nav-cta,
+.primary-button {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff8f0;
+  box-shadow: 0 14px 36px rgba(216, 75, 46, 0.28);
+}
+
+.nav-cta {
+  padding: 12px 18px;
+}
+
+.primary-button,
+.secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+}
+
+.secondary-button {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+}
+
+.nav-cta:hover,
+.primary-button:hover,
+.secondary-button:hover {
+  transform: translateY(-1px);
+}
+
+.hero-grid {
+  grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+  align-items: stretch;
+}
+
+.hero-copy {
+  padding: 54px 0 18px;
+}
+
+.hero-copy h1,
+.hero-stage-card h2,
+.section-heading h2,
+.feature-card h3,
+.program-card h3,
+.timeline-card h3,
+.coach-feature h3,
+.coach-card h3,
+.price-card h3,
+.access-card h2,
+.map-card h3,
+.trial-card h2 {
+  margin: 0;
+}
+
+.hero-copy h1 {
+  margin-top: 12px;
+  font-size: clamp(66px, 10vw, 128px);
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+}
+
+.hero-lead {
+  max-width: 640px;
+  margin: 20px 0 0;
+  font-size: 16px;
+}
+
+.hero-actions {
+  grid-auto-flow: column;
+  justify-content: start;
+  margin-top: 30px;
+}
+
+.hero-points,
+.program-card ul,
+.timeline-list,
+.name-list,
+.simple-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hero-points {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.hero-points li,
+.hero-stage-card,
+.feature-card,
+.program-card,
+.schedule-overview,
+.timeline-card,
+.coach-feature,
+.coach-card,
+.price-card,
+.access-card,
+.map-card,
+.trial-card {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.hero-points li {
+  padding: 12px 16px;
+  border-radius: 999px;
+  color: #f6ebdd;
+}
+
+.hero-stage {
+  display: grid;
+  gap: 18px;
+  padding-top: 36px;
+}
+
+.hero-stage-card,
+.feature-card,
+.program-card,
+.timeline-card,
+.coach-feature,
+.coach-card,
+.price-card,
+.access-card,
+.map-card,
+.trial-card {
+  border-radius: var(--radius-xl);
+}
+
+.hero-stage-card,
+.feature-card,
+.coach-feature,
+.coach-card,
+.price-card,
+.access-card,
+.map-card {
+  padding: 28px;
+}
+
+.main-stage {
+  position: relative;
+  overflow: hidden;
+  min-height: 290px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent),
+    linear-gradient(135deg, rgba(216, 75, 46, 0.2), rgba(242, 191, 125, 0.08));
+}
+
+.main-stage::after {
+  content: "PHANTOM";
+  position: absolute;
+  right: -8px;
+  bottom: -10px;
+  color: rgba(255, 248, 240, 0.05);
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(100px, 18vw, 180px);
+  line-height: 0.9;
+  letter-spacing: 0.06em;
+}
+
+.main-stage h2 {
+  margin-top: 10px;
+  font-size: clamp(50px, 7vw, 82px);
+  line-height: 0.92;
+}
+
+.stack-card {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.stack-card article {
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stack-card span,
+.class-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(242, 191, 125, 0.12);
+  color: var(--accent-3);
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.stack-card strong {
+  display: block;
+  margin-top: 12px;
+  font-size: 22px;
+}
+
+.trust-strip {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  padding-top: 6px;
+}
+
+.trust-strip p {
+  margin: 0;
+  padding: 18px 20px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  color: #f2ddc0;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.06em;
+}
+
+.section {
+  padding-top: 92px;
+}
+
+.section-heading {
+  max-width: 800px;
+}
+
+.section-heading h2 {
+  font-size: clamp(42px, 6vw, 78px);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+}
+
+.feature-grid,
+.pricing-grid,
+.step-grid,
+.faq-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 28px;
+}
+
+.feature-card h3,
+.program-card h3,
+.timeline-card h3,
+.coach-feature h3,
+.coach-card h3,
+.price-card h3,
+.map-card h3 {
+  font-size: 26px;
+}
+
+.program-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 30px;
+}
+
+.training-overview {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 28px;
+}
+
+.training-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 78px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #f6ead9;
+  text-decoration: none;
+  font-family: "Bebas Neue", "Noto Sans JP", sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.04em;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.training-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 228, 196, 0.22);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.training-detail-list {
+  margin-top: 26px;
+}
+
+.training-detail-card {
+  display: grid;
+  gap: 18px;
+  padding: 28px 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
+    var(--surface);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.training-detail-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.training-detail-head span {
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff6ef;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 32px;
+}
+
+.training-detail-head h3 {
+  margin: 0;
+  font-family: "Bebas Neue", "Noto Sans JP", sans-serif;
+  font-size: 38px;
+  line-height: 0.96;
+}
+
+.training-detail-card p,
+.detail-points li {
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.detail-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.detail-points li {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.program-card {
+  position: relative;
+  overflow: hidden;
+  padding: 30px;
+}
+
+.program-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -12% -32% 25%;
+  height: 180px;
+  background: radial-gradient(circle, rgba(216, 75, 46, 0.28), transparent 70%);
+  pointer-events: none;
+}
+
+.program-card.highlight {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent),
+    linear-gradient(135deg, rgba(242, 191, 125, 0.12), rgba(216, 75, 46, 0.08));
+}
+
+.program-card ul,
+.timeline-list,
+.name-list,
+.simple-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.program-card li,
+.timeline-list li,
+.name-list li,
+.simple-list li {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.rhythm-layout {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  margin-top: 30px;
+}
+
+.schedule-overview {
+  display: grid;
+  gap: 14px;
+  padding: 28px;
+}
+
+.time-block {
+  padding: 20px 22px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.time-block strong {
+  display: block;
+  margin-top: 8px;
+  color: #fff4e5;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 42px;
+  line-height: 0.95;
+}
+
+.time-block.closed strong {
+  color: var(--accent-3);
+}
+
+.timeline-card {
+  padding: 28px;
+}
+
+.timeline-list strong {
+  display: block;
+  color: #f8efe4;
+}
+
+.coach-layout {
+  grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+  margin-top: 28px;
+}
+
+.coach-feature {
+  min-height: 320px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent),
+    linear-gradient(135deg, rgba(216, 75, 46, 0.16), rgba(0, 0, 0, 0.08));
+}
+
+.coach-feature h3 {
+  font-size: clamp(46px, 7vw, 72px);
+  line-height: 0.95;
+}
+
+.coach-side {
+  grid-template-columns: 1fr;
+}
+
+.price-card.featured {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent),
+    linear-gradient(135deg, rgba(242, 191, 125, 0.1), rgba(216, 75, 46, 0.08));
+}
+
+.price-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.price-line:last-child {
+  border-bottom: 0;
+}
+
+.price-line span {
+  color: var(--muted);
+}
+
+.price-line strong {
+  color: #fff3e0;
+  font-size: 24px;
+}
+
+.access-layout {
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  margin-top: 28px;
+}
+
+.access-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.access-list div {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.access-list div:last-child {
+  border-bottom: 0;
+}
+
+.access-list span {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.access-list strong {
+  display: block;
+  margin-top: 6px;
+  color: #fff0dd;
+}
+
+.map-card {
+  display: grid;
+  align-content: center;
+}
+
+.trial-card {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  padding: 34px;
+  background:
+    linear-gradient(90deg, rgba(216, 75, 46, 0.16), transparent 62%),
+    var(--surface);
+}
+
+.trial-actions {
+  display: grid;
+  gap: 12px;
+  min-width: 260px;
+}
+
+.site-footer {
+  display: grid;
+  gap: 6px;
+  padding: 46px 0 18px;
+}
+
+.site-footer p:first-child {
+  color: #f4e2cb;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 28px;
+  letter-spacing: 0.08em;
+}
+
+.hero-copy,
+.main-stage,
+.stack-card article,
+.feature-card,
+.program-card,
+.training-chip,
+.training-detail-card,
+.schedule-overview,
+.timeline-card,
+.coach-feature,
+.coach-card,
+.price-card,
+.access-card,
+.map-card,
+.step-card,
+.faq-card,
+.trial-card {
+  animation: rise-in 700ms ease both;
+}
+
+.step-card,
+.faq-card {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  border-radius: var(--radius-xl);
+  padding: 28px;
+}
+
+.step-card span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff6ee;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 28px;
+}
+
+.step-card h3,
+.faq-card h3 {
+  margin: 16px 0 0;
+  font-family: "Bebas Neue", "Noto Sans JP", sans-serif;
+  font-size: 28px;
+}
+
+.step-card p,
+.faq-card p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.stack-card article:nth-child(2),
+.program-card:nth-child(2),
+.price-card:nth-child(2) {
+  animation-delay: 90ms;
+}
+
+.stack-card article:nth-child(3),
+.program-card:nth-child(3),
+.price-card:nth-child(3) {
+  animation-delay: 140ms;
+}
+
+.program-card:nth-child(4) {
+  animation-delay: 180ms;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-grid,
+  .feature-grid,
+  .program-grid,
+  .rhythm-layout,
+  .coach-layout,
+  .pricing-grid,
+  .access-layout,
+  .step-grid,
+  .faq-list,
+  .training-overview,
+  .trial-card,
+  .trust-strip,
+  .promo-bar,
+  .stack-card {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-actions,
+  .nav-links {
+    grid-auto-flow: row;
+  }
+
+  .trial-actions {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .site-shell {
+    width: min(var(--max-width), calc(100% - 20px));
+  }
+
+  .hero {
+    padding-top: 10px;
+  }
+
+  .topbar {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-copy strong {
+    font-size: 24px;
+  }
+
+  .hero-copy {
+    padding-top: 22px;
+  }
+
+  .hero-copy h1 {
+    font-size: clamp(48px, 18vw, 86px);
+  }
+
+  .main-stage h2 {
+    font-size: clamp(42px, 13vw, 68px);
+  }
+
+  .training-chip {
+    font-size: 22px;
+  }
+
+  .training-detail-head {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-points {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding-top: 72px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(34px, 12vw, 54px);
+  }
+
+  .hero-stage-card,
+  .feature-card,
+  .program-card,
+  .timeline-card,
+  .coach-feature,
+  .coach-card,
+  .price-card,
+  .access-card,
+  .map-card,
+  .trial-card {
+    padding: 22px;
+    border-radius: 24px;
+  }
+
+  .trust-strip p {
+    font-size: 24px;
+  }
+
+  .time-block strong {
+    font-size: 34px;
+  }
+}
